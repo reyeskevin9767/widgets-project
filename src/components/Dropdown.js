@@ -1,7 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+// Dropdown component can only set up event handlers easily
+// on elements it creates
+// Has difficultly with elements that it did not create
+// Event bubbling -> Event handlers are invoked automatically
+// as the it raise through the DOM structure
+
+// Event Handlers Order -> body, item, dropdown
+
+// useRef -> References a JSX element
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    document.body.addEventListener('click', (event) => {
+      
+      // Checks to see to event.target is inside JSX element
+      if (ref.current.contains(event.target)){
+        return;
+      };
+
+      setOpen(false);
+    });
+  }, []);
 
   const renderedOptions = options.map((option) => {
     // Null -> Renders Nothing
@@ -21,7 +44,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     );
   });
   return (
-    <div className="ui form">
+    <div ref={ref} className="ui form">
       <div className="field">
         <label className="label">Select a Color</label>
         <div
