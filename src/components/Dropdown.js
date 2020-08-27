@@ -15,15 +15,21 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   const ref = useRef();
 
   useEffect(() => {
-    document.body.addEventListener('click', (event) => {
-      
+    const onBodyclick = (event) => {
       // Checks to see to event.target is inside JSX element
-      if (ref.current.contains(event.target)){
+      if (ref.current.contains(event.target)) {
         return;
-      };
+      }
 
       setOpen(false);
-    });
+    };
+
+    document.body.addEventListener('click', onBodyclick);
+
+    // Clean up
+    return () => {
+      document.body.removeEventListener('click', onBodyclick);
+    };
   }, []);
 
   const renderedOptions = options.map((option) => {
