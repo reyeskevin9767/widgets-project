@@ -4,6 +4,7 @@ import dompurify from 'dompurify';
 
 const Search = () => {
   const [term, setTerm] = useState('programming');
+  const [debouncedTerm, setDoucnedTerm] = useState(term);
   const [results, setResults] = useState([]);
 
   // useEffect - Allow function components to use
@@ -18,6 +19,22 @@ const Search = () => {
   // if data has changed since last render
 
   // useEffect cannot use async and await directly
+
+  // Debounce each input
+  // When term is updated -> create timer -> return clearTimeout
+  // When term is updated again -> return clearTimeout(cancels timer) -> create new timer
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDoucnedTerm(term);
+    }, 500);
+
+    // Run all useEffect -> then return arrow function on first render
+    // Next render -> run arrow function -> run all useEffect -> return arrow function
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
+
   useEffect(() => {
     const search = async () => {
       const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
@@ -26,16 +43,17 @@ const Search = () => {
           list: 'search',
           origin: '*',
           format: 'json',
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     };
 
-    if (term) {
+    // Request to api
+    if (debouncedTerm) {
       search();
     }
-  }, [term]);
+  }, [debouncedTerm]);
 
   // Map through api results
   const renderedResults = results.map((result) => {
