@@ -6,6 +6,13 @@ import React from 'react';
 const Link = ({ className, href, children }) => {
   const onClick = (event) => {
     event.preventDefault();
+
+    // Update the url
+    window.history.pushState({}, '', href);
+
+    // Notify the routes, url has changed
+    const navEvent = new PopStateEvent('popstate');
+    window.dispatchEvent(navEvent);
   };
 
   return (
