@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Dropdown from './Dropdown';
 import Convert from './Convert';
-//AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM
+
 
 const options = [
   {
@@ -25,8 +25,8 @@ const Translate = () => {
   return (
     <div>
       <div className="ui form">
+      <h3 className="ui header">Translate Only Works At localhost:3000</h3>
         <div className="field">
-          <p>Translate Will Only Work Offline at Localhost 3000</p>
           <label>Enter Text</label>
           <input value={text} onChange={(e) => setText(e.target.value)} />
         </div>
