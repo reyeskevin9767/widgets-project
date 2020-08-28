@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     // A JSX inside another JSX tag is know as a children prop
-    <div>
+    <div className="ui container" style={{marginTop: '10px'}}>
       <Header />
       <Route path="/">
         <Accordion items={items} />
