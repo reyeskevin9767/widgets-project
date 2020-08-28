@@ -5,6 +5,7 @@ const Convert = ({ language, text }) => {
   const [translated, setTranslated] = useState('');
   const [debouncedText, setDebouncedText] = useState(text);
 
+  // Debounce Input
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedText(text);
@@ -15,6 +16,7 @@ const Convert = ({ language, text }) => {
     };
   }, [text]);
 
+  // Api Request
   useEffect(() => {
     // Helper Function
     const doTranslation = async () => {
