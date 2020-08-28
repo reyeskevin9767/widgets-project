@@ -46,6 +46,12 @@ const Search = () => {
           srsearch: debouncedTerm,
         },
       });
+
+      // Prevent api warning 
+      if (window.location.pathname !== '/list') {
+        return;
+      }
+
       setResults(data.query.search);
     };
 

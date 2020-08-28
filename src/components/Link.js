@@ -5,6 +5,11 @@ import React from 'react';
 // Each route will look at url and determine if route needs to be rendered
 const Link = ({ className, href, children }) => {
   const onClick = (event) => {
+    // Open in new tab
+    if (event.metaKey || event.ctrlKey) {
+      return;
+    }
+
     event.preventDefault();
 
     // Update the url

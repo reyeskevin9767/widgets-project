@@ -1,12 +1,14 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // Event listener in component usually results in useing useEffect
 
 const Route = ({ path, children }) => {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
   // Usually event listener in component runs one time
   useEffect(() => {
     const onLocationChange = () => {
-      console.log('Location Change');
+      setCurrentPath(window.location.pathname);
     };
 
     window.addEventListener('popstate', onLocationChange);
@@ -17,7 +19,7 @@ const Route = ({ path, children }) => {
     };
   }, []);
 
-  return window.location.pathname === path ? children : null;
+  return currentPath === path ? children : null;
 };
 
 export default Route;
